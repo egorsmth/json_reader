@@ -25,6 +25,7 @@ object JsonReader {
 
   def main(args: Array[String]): Unit = {
     if (args.length != 1) {
+      println("USAGE: <winemag_file.json>")
       sys.exit(1)
     }
 
