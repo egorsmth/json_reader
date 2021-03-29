@@ -14,15 +14,13 @@ case class WineMag(
   title: Option[String],
   variety: Option[String],
   winery: Option[String]
-                  )
+)
 
 object WineMag {
   implicit val decoder: Decoder[WineMag] = deriveDecoder[WineMag]
 }
 
 object JsonReader {
-
-
   def main(args: Array[String]): Unit = {
     if (args.length != 1) {
       println("USAGE: <winemag_file.json>")
