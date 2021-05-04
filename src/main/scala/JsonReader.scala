@@ -5,7 +5,6 @@ import io.circe.generic.auto._
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.parser._
 import io.circe.syntax._
-import WineMag._
 
 case class WineMag(
   id: Option[Int],
@@ -14,10 +13,15 @@ case class WineMag(
   title: Option[String],
   variety: Option[String],
   winery: Option[String]
-)
-
-object WineMag {
-  implicit val decoder: Decoder[WineMag] = deriveDecoder[WineMag]
+) {
+  private def unpack(in: Option[_], default: String) =
+    in.map(_.toString).getOrElse(default)
+  override def toString: String = s"${unpack(id, "NoId")}, " +
+    s"${unpack(country, "NoCountry")}, " +
+    s"${unpack(points, "NoPoints")}, " +
+    s"${unpack(title, "NoTitle")}, " +
+    s"${unpack(variety, "NoVariety")}, " +
+    s"${unpack(winery, "NoWinery")}"
 }
 
 object JsonReader {
@@ -33,7 +37,7 @@ object JsonReader {
 
     res.map(decode[WineMag](_))
       .collect
-      .foreach(_.map(println).left.map(e => println(s"ERROR: $e")))
+      .foreach(_.map((x: WineMag) => println(x)).left.map(e => println(s"ERROR: $e")))
   }
 
 }
