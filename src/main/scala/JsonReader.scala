@@ -36,7 +36,6 @@ object JsonReader {
     val res: RDD[String] = spark.sparkContext.textFile(args(0))
 
     res.map(decode[WineMag](_))
-      .collect
       .foreach(_.map((x: WineMag) => println(x)).left.map(e => println(s"ERROR: $e")))
   }
 
